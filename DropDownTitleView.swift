@@ -94,6 +94,9 @@ open class DropDownTitleView : UIControl {
 	}
 
 	func imageNamed(_ name: String) -> UIImage {
+		if let image = UIImage(named: name, in: Bundle.module, compatibleWith: nil) {
+			return image
+		}
 		let bundle = Bundle(for: type(of: self))
 		return UIImage(named: name, in: bundle, compatibleWith: nil)!
 	}

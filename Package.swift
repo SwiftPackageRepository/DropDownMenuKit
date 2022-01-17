@@ -23,7 +23,7 @@ let package = Package(
         	path: ".",
         	exclude: ["Example", "README.md", "LICENSE", "NEWS.md", "TODO.md", "Info.plist", "DropDownMenuKit.podspec"],
    			resources: [
-   				.process("DropDownMenuKit.xcassets")
+   				.copy("DropDownMenuKit.xcassets")
    			],
         	cSettings: [
       			.headerSearchPath("./")
