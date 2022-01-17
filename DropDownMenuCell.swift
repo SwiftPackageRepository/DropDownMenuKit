@@ -27,16 +27,18 @@ open class DropDownMenuCell : UITableViewCell {
 	// MARK: - Initialization
 
 	override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-		 fatalError("init(style:reuseIdentifier:) is not supported")
+		 super.init(style: style, reuseIdentifier: reuseIdentifier)
+		setUp()
 	}
 	
 	public init() {
-		super.init(style: .default, reuseIdentifier: NSStringFromClass(DropDownMenuCell.self))
+		super.init(style: .subtitle, reuseIdentifier: NSStringFromClass(DropDownMenuCell.self))
 		setUp()
 	}
 
 	required public init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
+		setUp()
 	}
 
 	open override func awakeFromNib() {

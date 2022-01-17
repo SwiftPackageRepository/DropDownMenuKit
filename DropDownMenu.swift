@@ -39,6 +39,9 @@ open class DropDownMenu : UIView, UITableViewDataSource, UITableViewDelegate, UI
 			setNeedsLayout()
 		}
 	}
+	
+	open var isAnimating = false
+	
 	// The background view to be faded out with the background alpha, when the 
 	// menu slides over it
 	open var backgroundView: UIView? {
@@ -156,7 +159,7 @@ open class DropDownMenu : UIView, UITableViewDataSource, UITableViewDelegate, UI
 	open override func layoutSubviews() {
 		super.layoutSubviews()
 
-		let contentHeight = menuCells.reduce(0) { $0 + $1.rowHeight }
+		let contentHeight = menuCells.reduce(0) { $0 + $1.rowHeight } + (menuView.tableFooterView?.frame.height ?? 0)
 		let maxContentHeight = frame.height - visibleContentInsets.bottom - visibleContentInsets.top
 		let scrollable = contentHeight > maxContentHeight
 
@@ -262,11 +265,13 @@ open class DropDownMenu : UIView, UITableViewDataSource, UITableViewDelegate, UI
 		}
 		transition.show.map { $0.before }.joined()()
 		isHidden = false
+		isAnimating = true
 		UIView.animate(withDuration: transition.duration,
 		                      delay: transition.delay,
 		                    options: transition.options,
 							animations: transition.show.map { $0.change }.joined(),
-						 completion: { _ in self.transition.show.map { $0.after }.joined()() })
+						 completion: { _ in self.transition.show.map { $0.after }.joined()()
+							     self.isAnimating = false })
 	}
 	
 	@IBAction open func hide() {
@@ -274,6 +279,7 @@ open class DropDownMenu : UIView, UITableViewDataSource, UITableViewDelegate, UI
 			return
 		}
 		transition.hide.map { $0.before }.joined()()
+		isAnimating = true
 		UIView.animate(withDuration: transition.duration,
 		                      delay: transition.delay,
 		                    options: transition.options,
@@ -281,6 +287,7 @@ open class DropDownMenu : UIView, UITableViewDataSource, UITableViewDelegate, UI
 		                 completion: { _ in
 			self.transition.hide.map { $0.after }.joined()()
 			self.isHidden = true
+			self.isAnimating = false 
 		})
 	}
 	
