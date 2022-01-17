@@ -21,9 +21,9 @@ let package = Package(
             name: "DropDownMenuKit",
             dependencies: [],
         	path: ".",
-        	exclude: ["Example"],
+        	exclude: ["Example", "README.md", "LICENSE", "NEWS.md", "TODO.md", "Info.plist", "DropDownMenuKit.podspec"],
    			resources: [
-   				.copy("DropDownMenuKit.xcassets")
+   				.process("DropDownMenuKit.xcassets")
    			],
         	cSettings: [
       			.headerSearchPath("./")
